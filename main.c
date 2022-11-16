@@ -1,16 +1,15 @@
 #include "main.h"
 #include "Scheduler/Scheduler.h"
-#include "LED/LED.h"
+#include "TrafficLights/TrafficLights.h"
 
 int main(void)
 {
-
-    LED_init();
+    TrafficLights_init();
 
     SCH_init();
 
-    SCH_add_task(LED_update, 0, 1000);
-
+    SCH_add_task(TrafficLights_update, 0, 1000);
+	
     SCH_start();
 
     while(1){

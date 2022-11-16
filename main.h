@@ -1,8 +1,8 @@
 #ifndef _MAIN_H_
 #define _MAIN_H_
 
-#include "Includes/types.h"
-#include "Includes/ATmega32A_Registers.h"
+#include "include/types.h"
+#include "include/ATmega32A_Registers.h"
 
 /* The ATmega family have a 1-instruction per 1 clock cycle ratio */
 #define CLOCK_FREQ (1000000UL)

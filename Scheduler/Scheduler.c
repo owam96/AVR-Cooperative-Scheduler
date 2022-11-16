@@ -1,5 +1,7 @@
 #include "../main.h"
 #include "Scheduler.h"
+#define __STDINT_H_ // Assume stdint is defined so my own "types.h" will be used instead
+#include <avr/interrupt.h>
 
 sTask scheduler_tasks[SCH_MAX_TASKS];
 
@@ -20,7 +22,7 @@ void SCH_init(){
     OCR1AL = 0xE8;
 
     //Activate timer in CTC (clear timer on compare match) mode (auto-reload)
-    //with prescaler set to 1
+    //with prescaler set to 8
     TCCR1A = 0x00;
     TCCR1B = 0x09;
 
@@ -76,10 +78,10 @@ void SCH_start(){
     SET_BIT(TIMSK, OCIE1A);
 
     //Enable global interrupts
-    SET_BIT(SREG, 7);
+    sei();
 }
 
-void __vector_8(void){ // SCH_update function -- Timer 1 CTC interrupt
+ISR(TIMER1_COMPA_vect){ // SCH_update function -- Timer 1 CTC interrupt
 
     uint8_t index;
     for(index = 0; index < SCH_MAX_TASKS; index++){
